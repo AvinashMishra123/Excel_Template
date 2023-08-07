@@ -1,0 +1,251 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--  <title>Template Screen</title>-->
+<!--  <link rel="stylesheet" href="styles.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--  <h2>Template Screen</h2>-->
+<!--  <div class="buttons">-->
+<!--    <button class="download-btn">Download Template</button>-->
+<!--    <button class="upload-btn">Upload Template</button>-->
+<!--  </div>-->
+<!--  <table class="data-table">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>First Name</th>-->
+<!--      <th>Last Name</th>-->
+<!--      <th>Date of Birth</th>-->
+<!--      <th>City</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--      <td>Avi</td>-->
+<!--      <td>Mishra</td>-->
+<!--      <td>02/05/1998</td>-->
+<!--      <td>Bengaluru</td>-->
+<!--    </tr>-->
+<!--    &lt;!&ndash; Add other rows of data here as needed &ndash;&gt;-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--  function downloadTemplate() {-->
+<!--    fetch('/download-template', {-->
+<!--      method: 'GET',-->
+<!--      headers: {-->
+<!--        'Content-Type': 'application/json'-->
+<!--      }-->
+<!--    })-->
+<!--    .then(response => response.blob())-->
+<!--    .then(blob => {-->
+<!--      // Create a temporary link to download the file-->
+<!--      const url = window.URL.createObjectURL(blob);-->
+<!--      const a = document.createElement('a');-->
+<!--      a.href = url;-->
+<!--      a.download = 'template.xlsx';-->
+<!--      a.click();-->
+<!--      window.URL.revokeObjectURL(url);-->
+<!--    })-->
+<!--    .catch(error => console.error('Error downloading template:', error));-->
+<!--  }-->
+
+<!--  function uploadTemplate() {-->
+<!--    const data = [-->
+<!--      {-->
+<!--        firstName: 'John',-->
+<!--        lastName: 'Doe',-->
+<!--        dateOfBirth: '1990-01-01',-->
+<!--        city: 'New York'-->
+<!--      },-->
+<!--      // Add other data rows as needed-->
+<!--    ];-->
+
+<!--    fetch('/upload-template', {-->
+<!--      method: 'POST',-->
+<!--      headers: {-->
+<!--        'Content-Type': 'application/json'-->
+<!--      },-->
+<!--      body: JSON.stringify(data)-->
+<!--    })-->
+<!--    .then(response => {-->
+<!--      if (!response.ok) {-->
+<!--        throw new Error('Error uploading template data');-->
+<!--      }-->
+<!--      console.log('Template data uploaded successfully!');-->
+<!--      // You can perform additional actions here, e.g., refreshing the table-->
+<!--    })-->
+<!--    .catch(error => console.error('Error uploading template data:', error));-->
+<!--  }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+/////////////////////////////////////////
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--  <title>Template Screen</title>-->
+<!--  <link rel="stylesheet" href="styles.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--  <h2>Template Screen</h2>-->
+<!--  <div class="buttons">-->
+<!--    <a class="download-btn" href="/download-template">Download Template</a>-->
+<!--    <form action="/upload-template" method="post" enctype="multipart/form-data">-->
+<!--      <input type="file" name="file" accept=".xlsx">-->
+<!--      <button class="upload-btn" type="submit">Upload Template</button>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--  <table class="data-table">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>First Name</th>-->
+<!--      <th>Last Name</th>-->
+<!--      <th>Date of Birth</th>-->
+<!--      <th>City</th>-->
+<!--      &lt;!&ndash; Add additional columns as needed &ndash;&gt;-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    &lt;!&ndash; Data rows will be dynamically added here &ndash;&gt;-->
+<!--    &lt;!&ndash; Example row with data from the server-side &ndash;&gt;-->
+<!--    <tr th:each="data : ${dataList}">-->
+<!--      <td th:text="${data.firstName}"></td>-->
+<!--      <td th:text="${data.lastName}"></td>-->
+<!--      <td th:text="${data.dateOfBirth}"></td>-->
+<!--      <td th:text="${data.city}"></td>-->
+<!--      &lt;!&ndash; Add additional columns as needed &ndash;&gt;-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
+<!--&lt;!&ndash; Add this script tag at the end of the template_form.html file, before the closing </body> tag &ndash;&gt;-->
+<!--<script>-->
+<!--    // JavaScript function to fetch and update data in the table-->
+<!--    function fetchDataAndRenderTable() {-->
+<!--        fetch('/upload-template')  // Replace '/data' with the correct API endpoint to fetch the data from the server-->
+<!--            .then(response => response.json())-->
+<!--            .then(dataList => {-->
+<!--                const tableBody = document.querySelector('.data-table tbody');-->
+<!--                tableBody.innerHTML = ''; // Clear the existing table rows-->
+
+<!--                dataList.forEach(data => {-->
+<!--                    const row = tableBody.insertRow();-->
+<!--                    row.insertCell().textContent = data.firstName;-->
+<!--                    row.insertCell().textContent = data.lastName;-->
+<!--                    row.insertCell().textContent = data.dateOfBirth;-->
+<!--                    row.insertCell().textContent = data.city;-->
+<!--                    // Add additional cells for other columns-->
+<!--                });-->
+<!--            })-->
+<!--            .catch(error => console.error('Error fetching data:', error));-->
+<!--    }-->
+
+<!--    // Call fetchDataAndRenderTable when the page loads-->
+<!--    fetchDataAndRenderTable();-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<html>
+<head>
+  <title>Spring Boot Template App</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Template Actions</h2>
+  <button class="btn btn-primary" id="downloadBtn">Download Template</button>
+  <input type="file" id="uploadFileInput" style="display: none;">
+  <button class="btn btn-success" id="uploadBtn">Upload Template</button>
+</div>
+<div class="container mt-5">
+  <h2>Uploaded User Data</h2>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Org Name</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Date of Birth</th>
+      <th>City</th>
+    </tr>
+    </thead>
+    <tbody id="userDataBody">
+    <!-- User data will be added dynamically here -->
+    </tbody>
+  </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(function() {
+            // Download Template
+            $("#downloadBtn").on("click", function() {
+                window.location.href = "/template/download";
+            });
+
+            // Upload Template
+            $("#uploadBtn").on("click", function() {
+                $("#uploadFileInput").click();
+            });
+
+            $("#uploadFileInput").on("change", function() {
+                var formData = new FormData();
+                formData.append("file", $("#uploadFileInput")[0].files[0]);
+
+                $.ajax({
+                    url: "/template/upload",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        alert(response);
+                        loadUserData(); // Refresh user data table
+                    },
+                    error: function(error) {
+                        alert("Error uploading template.");
+                    }
+                });
+            });
+
+            // Load User Data
+            function loadUserData() {
+                $.ajax({
+                    url: "/template/users",
+                    type: "GET",
+                    success: function(users) {
+                        var tableBody = $("#userDataBody");
+                        tableBody.empty();
+
+                        for (var i = 0; i < users.length; i++) {
+                            var user = users[i];
+                            var row = "<tr>" +
+                                      "<td>" + user.orgName + "</td>" +
+                                      "<td>" + user.firstName + "</td>" +
+                                      "<td>" + user.lastName + "</td>" +
+                                      "<td>" + user.dob + "</td>" +
+                                      "<td>" + user.city + "</td>" +
+                                      "</tr>";
+                            tableBody.append(row);
+                        }
+                    },
+                    error: function(error) {
+                        alert("Error loading user data.");
+                    }
+                });
+            }
+
+            // Load user data on page load
+            loadUserData();
+        });
+    </script>
+</body>
+</html>
